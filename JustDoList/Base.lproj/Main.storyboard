@@ -31,7 +31,14 @@
                             <outlet property="delegate" destination="IOS-XR-X8J" id="zeS-GF-lEh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="JustDo list" id="mxY-H5-SNg"/>
+                    <navigationItem key="navigationItem" title="JustDo list" id="mxY-H5-SNg">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="G7o-OA-DG6">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="IOS-XR-X8J" id="ihz-h5-I6y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXX-qn-3R5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,6 +68,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
