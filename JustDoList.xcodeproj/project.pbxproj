@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		1288D8E525C4828E00D72806 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8E425C4828E00D72806 /* AppDelegate.swift */; };
 		1288D8E725C4828E00D72806 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8E625C4828E00D72806 /* SceneDelegate.swift */; };
-		1288D8E925C4828E00D72806 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8E825C4828E00D72806 /* ViewController.swift */; };
+		1288D8E925C4828E00D72806 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8E825C4828E00D72806 /* ToDoListViewController.swift */; };
 		1288D8EC25C4828E00D72806 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1288D8EA25C4828E00D72806 /* Main.storyboard */; };
 		1288D8EE25C4828F00D72806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1288D8ED25C4828F00D72806 /* Assets.xcassets */; };
 		1288D8F125C4828F00D72806 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1288D8EF25C4828F00D72806 /* LaunchScreen.storyboard */; };
+		1288D8FC25C489E800D72806 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8FB25C489E800D72806 /* K.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1288D8E125C4828E00D72806 /* JustDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JustDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1288D8E425C4828E00D72806 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1288D8E625C4828E00D72806 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1288D8E825C4828E00D72806 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1288D8E825C4828E00D72806 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
 		1288D8EB25C4828E00D72806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1288D8ED25C4828F00D72806 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1288D8F025C4828F00D72806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1288D8F225C4828F00D72806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1288D8FB25C489E800D72806 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 			children = (
 				1288D8E425C4828E00D72806 /* AppDelegate.swift */,
 				1288D8E625C4828E00D72806 /* SceneDelegate.swift */,
-				1288D8E825C4828E00D72806 /* ViewController.swift */,
+				1288D8E825C4828E00D72806 /* ToDoListViewController.swift */,
 				1288D8EA25C4828E00D72806 /* Main.storyboard */,
 				1288D8ED25C4828F00D72806 /* Assets.xcassets */,
 				1288D8EF25C4828F00D72806 /* LaunchScreen.storyboard */,
 				1288D8F225C4828F00D72806 /* Info.plist */,
+				1288D8FB25C489E800D72806 /* K.swift */,
 			);
 			path = JustDoList;
 			sourceTree = "<group>";
@@ -137,7 +140,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1288D8E925C4828E00D72806 /* ViewController.swift in Sources */,
+				1288D8E925C4828E00D72806 /* ToDoListViewController.swift in Sources */,
+				1288D8FC25C489E800D72806 /* K.swift in Sources */,
 				1288D8E525C4828E00D72806 /* AppDelegate.swift in Sources */,
 				1288D8E725C4828E00D72806 /* SceneDelegate.swift in Sources */,
 			);
@@ -289,6 +293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BKZWAX96B6;
 				INFOPLIST_FILE = JustDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,6 +313,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BKZWAX96B6;
 				INFOPLIST_FILE = JustDoList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
