@@ -17,9 +17,7 @@ class ToDoListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view
         loadData()
-        if let array = defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemAray = array
-        }
+        
     }
     
     //MARK - TableView DatasourceMethods
