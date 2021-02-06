@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--JustDo list-->
+        <!--Items-->
         <scene sceneID="cVx-cV-23v">
             <objects>
                 <tableViewController id="IOS-XR-X8J" customClass="ToDoListViewController" customModule="JustDoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -39,7 +39,7 @@
                             <outlet property="delegate" destination="IOS-XR-X8J" id="zeS-GF-lEh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="JustDo list" id="mxY-H5-SNg">
+                    <navigationItem key="navigationItem" title="Items" id="mxY-H5-SNg">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="G7o-OA-DG6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -50,7 +50,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gXX-qn-3R5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1721.7391304347827" y="124.55357142857142"/>
+            <point key="canvasLocation" x="3171" y="125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sLX-3l-BfA">
@@ -67,12 +67,51 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="IOS-XR-X8J" kind="relationship" relationship="rootViewController" id="Kk3-bh-IQt"/>
+                        <segue destination="VwB-WX-s7o" kind="relationship" relationship="rootViewController" id="dH8-xH-5i0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e8M-2o-dI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="811.59420289855075" y="124.55357142857142"/>
+        </scene>
+        <!--JustDo list-->
+        <scene sceneID="Zr4-JE-qYz">
+            <objects>
+                <tableViewController id="VwB-WX-s7o" customClass="ListViewController" customModule="JustDoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="iaG-vb-FEr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListCell" id="wl6-3h-4AH">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wl6-3h-4AH" id="clZ-yZ-FrQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="VwB-WX-s7o" id="Kvr-SU-7K9"/>
+                            <outlet property="delegate" destination="VwB-WX-s7o" id="GFf-p5-rVR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="JustDo list" id="GW6-Uu-OGN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gUe-rg-zbO">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="VwB-WX-s7o" id="eYv-Pd-8ot"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="IOS-XR-X8J" kind="show" identifier="goToItems" id="e5h-AB-lmz"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KAf-mT-TtH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2087" y="-83"/>
         </scene>
     </scenes>
     <resources>

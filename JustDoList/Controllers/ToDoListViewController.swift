@@ -11,6 +11,11 @@ import CoreData
 class ToDoListViewController: UITableViewController {
     
     var itemAray : [Item] = []
+    var selectedList : List? {
+        didSet {
+            loadData()
+        }
+    }
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
@@ -28,7 +33,7 @@ class ToDoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.itemCellID, for: indexPath)
         let item = itemAray[indexPath.row]
         cell.textLabel?.text = item.taskName
         cell.accessoryType = item.check ? .checkmark : .none
@@ -58,6 +63,7 @@ class ToDoListViewController: UITableViewController {
                     let newItem = Item(context: self.context)
                     newItem.taskName = textField
                     newItem.check = false
+                    newItem.parentCategory = self.selectedList
                     self.itemAray.append(newItem)
                     self.saveData()
                 }
@@ -79,7 +85,17 @@ class ToDoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        let listPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedList!.name!)
+        
+        if let additionalPredicate = predicate {
+            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [listPredicate, additionalPredicate])
+            
+            request.predicate  = compoundPredicate
+        } else {
+            request.predicate = listPredicate
+        }
+        
         
         do {
             itemAray = try context.fetch(request)
@@ -101,9 +117,9 @@ extension ToDoListViewController: UISearchBarDelegate {
         
         if let text = searchBar.text {
             if text.count > 0 {
-                request.predicate = NSPredicate(format: "taskName CONTAINS[cd] %@", text)
+                let predicate = NSPredicate(format: "taskName CONTAINS[cd] %@", text)
                 request.sortDescriptors = [NSSortDescriptor(key: "taskName", ascending: true)]
-                loadData(with: request)
+                loadData(with: request, predicate: predicate)
             } else {
                 loadData()
             }
@@ -114,9 +130,9 @@ extension ToDoListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         if searchText.count > 0 {
-            request.predicate = NSPredicate(format: "taskName CONTAINS[cd] %@", searchText)
+            let predicate = NSPredicate(format: "taskName CONTAINS[cd] %@", searchText)
             request.sortDescriptors = [NSSortDescriptor(key: "taskName", ascending: true)]
-            loadData(with: request)
+            loadData(with: request, predicate: predicate)
         } else {
             loadData()
             DispatchQueue.main.async {
