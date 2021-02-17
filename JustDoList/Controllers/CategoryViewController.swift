@@ -6,10 +6,11 @@
 //
 
 import UIKit
-import CoreData
 import RealmSwift
+import ChameleonFramework
 
-class ListViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
+        
     
     var categoryArray: Results<Category>?
     
@@ -17,7 +18,20 @@ class ListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = 60
         loadCategories()
+        //tableView.separatorStyle = .singleLine
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = #colorLiteral(red: 0.03756164014, green: 0.4884038568, blue: 0.6257488728, alpha: 1)
+
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.standardAppearance = appearance
     }
     
     // MARK: - Table view data source
@@ -27,8 +41,13 @@ class ListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.listCellId, for: indexPath)
+        
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
+        
+        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
+        
         return cell
     }
     
@@ -43,9 +62,10 @@ class ListViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
             if let textField = alert.textFields![0].text {
                 if textField.count > 0 {
-                    let newCategiry = Category()
-                    newCategiry.name = textField
-                    self.save(category: newCategiry)
+                    let newCategory = Category()
+                    newCategory.name = textField
+                    newCategory.color = UIColor.randomFlat().hexValue()
+                    self.save(category: newCategory)
                 }
             }
         }))
@@ -75,9 +95,27 @@ class ListViewController: UITableViewController {
         
     }
     
+    //MARK: - Delete data from swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        
+        if let category = self.categoryArray?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(category)
+                }
+            } catch {
+                print("Error saving categories context: \(error)")
+            }
+            
+        }
+
+    }
+    
     // MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         
         performSegue(withIdentifier: "goToItems", sender: self)
         
@@ -86,13 +124,14 @@ class ListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! ToDoListViewController
-        
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedCategory = categoryArray?[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         
     }
     
 }
+
 
 

@@ -8,6 +8,5 @@
 import Foundation
 
 struct K {
-    static let itemCellID = "ToDoItemCell"
-    static let listCellId = "ListCell"
+    static let cellID = "Cell"
 }

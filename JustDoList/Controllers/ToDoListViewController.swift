@@ -7,40 +7,13 @@
 
 import UIKit
 import RealmSwift
-import SwipeCellKit
+import ChameleonFramework
 
-class ToDoListViewController: UITableViewController, SwipeTableViewCellDelegate {
+class ToDoListViewController: SwipeTableViewController {
+        
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
-
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            if let item = self.todoItems?[indexPath.row] {
-                do {
-                    try self.realm.write {
-                        self.realm.delete(item)
-                    }
-                } catch {
-                    print("Error deleting item :\(error)")
-                }
-            }
-            self.tableView.reloadData()
-        }
-
-        // customize the action appearance
-        deleteAction.image = UIImage(named: "delete")
-
-        return [deleteAction]
-    }
-    
-//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-//        var options = SwipeOptions()
-//        options.expansionStyle = .destructive
-//        options.transitionStyle = .border
-//        return options
-//    }
-    
-    
+    @IBOutlet weak var addButtonOutlet: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
     let realm = try! Realm()
     var todoItems : Results<Item>?
     var selectedCategory : Category? {
@@ -53,9 +26,37 @@ class ToDoListViewController: UITableViewController, SwipeTableViewCellDelegate 
         super.viewDidLoad()
         // Do any additional setup after loading the view
         loadItems()
+        tableView.separatorStyle = .none
+        
+
+        
     }
     
-    //MARK: - TableView DatasourceMethods
+    override func viewWillAppear(_ animated: Bool) {
+        let appearance = UINavigationBarAppearance()
+        
+        title = selectedCategory?.name
+        
+        if let hexColor = selectedCategory?.color {
+            if let color = UIColor(hexString: hexColor) {
+                appearance.backgroundColor = color
+                appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(color, returnFlat: true)]
+                navigationController?.navigationBar.tintColor = ContrastColorOf(color, returnFlat: true)                
+                searchBar.barTintColor = color
+                addButtonOutlet.tintColor = ContrastColorOf(color, returnFlat: true)  
+                
+            }
+        }
+        
+        self.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.navigationBar.standardAppearance = appearance
+                        
+    }
+    
+ 
+    
+    //MARK: - TableView DatasourceMethods                   
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems?.count ?? 1
@@ -63,14 +64,22 @@ class ToDoListViewController: UITableViewController, SwipeTableViewCellDelegate 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.itemCellID, for: indexPath) as! SwipeTableViewCell
-        cell.delegate = self
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.taskName
             cell.accessoryType = item.check ? .checkmark : .none
         } else {
             cell.textLabel?.text = "No added items yet"
         }
+        
+        if let color = selectedCategory?.color {
+            let backgroundColor = UIColor(hexString: color)?.darken(byPercentage:  CGFloat(indexPath.row) / CGFloat((todoItems?.count ?? 1) * 2))
+            cell.backgroundColor = backgroundColor
+            cell.textLabel?.textColor = ContrastColorOf(backgroundColor!, returnFlat: true)
+        }
+                
+        
         return cell
         
     }
@@ -135,8 +144,21 @@ class ToDoListViewController: UITableViewController, SwipeTableViewCellDelegate 
     func loadItems() {
         
         todoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: false)
+
         tableView.reloadData()
         
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(item)
+                }
+            } catch {
+                print("Error deleting item :\(error)")
+            }
+        }
     }
     
 }
@@ -159,6 +181,6 @@ extension ToDoListViewController: UISearchBarDelegate {
                 searchBar.resignFirstResponder()
             }
         }
-        
     }
 }
+
