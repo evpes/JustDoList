@@ -9,4 +9,5 @@ import Foundation
 
 struct K {
     static let cellID = "Cell"
+    static let cellNibName = "CategoryViewCell"
 }

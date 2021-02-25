@@ -21,6 +21,7 @@ class CategoryViewController: SwipeTableViewController {
         self.tableView.rowHeight = 60
         loadCategories()
         //tableView.separatorStyle = .singleLine
+        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellID)
 
     }
     
@@ -42,11 +43,13 @@ class CategoryViewController: SwipeTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        
-        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
-        
-        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! CategoryViewCell
+        cell.txtLabel.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
+        cell.rightImageView.tintColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
+        cell.checkButtonOutlet.isHidden = true
+//        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
+//        
+//        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
         
         return cell
     }

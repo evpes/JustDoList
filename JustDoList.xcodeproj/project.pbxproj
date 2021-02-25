@@ -18,6 +18,8 @@
 		1288D8EE25C4828F00D72806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1288D8ED25C4828F00D72806 /* Assets.xcassets */; };
 		1288D8F125C4828F00D72806 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1288D8EF25C4828F00D72806 /* LaunchScreen.storyboard */; };
 		1288D8FC25C489E800D72806 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1288D8FB25C489E800D72806 /* K.swift */; };
+		129F769125DD7AEC00E78520 /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129F768F25DD7AEC00E78520 /* CategoryViewCell.swift */; };
+		129F769225DD7AEC00E78520 /* CategoryViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129F769025DD7AEC00E78520 /* CategoryViewCell.xib */; };
 		B0EAABED8E6034A2C4EF9584 /* Pods_JustDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE96003F403A53739B7CAF /* Pods_JustDoList.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		1288D8F025C4828F00D72806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1288D8F225C4828F00D72806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1288D8FB25C489E800D72806 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		129F768F25DD7AEC00E78520 /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
+		129F769025DD7AEC00E78520 /* CategoryViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryViewCell.xib; sourceTree = "<group>"; };
 		41B8E5EED6141EBD9C680A7E /* Pods-JustDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JustDoList.debug.xcconfig"; path = "Target Support Files/Pods-JustDoList/Pods-JustDoList.debug.xcconfig"; sourceTree = "<group>"; };
 		55EE96003F403A53739B7CAF /* Pods_JustDoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JustDoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CA164A6893FF0B56D346726 /* Pods-JustDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JustDoList.release.xcconfig"; path = "Target Support Files/Pods-JustDoList/Pods-JustDoList.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				1288D8EA25C4828E00D72806 /* Main.storyboard */,
+				129F768F25DD7AEC00E78520 /* CategoryViewCell.swift */,
+				129F769025DD7AEC00E78520 /* CategoryViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +197,7 @@
 			files = (
 				1288D8F125C4828F00D72806 /* LaunchScreen.storyboard in Resources */,
 				1288D8EE25C4828F00D72806 /* Assets.xcassets in Resources */,
+				129F769225DD7AEC00E78520 /* CategoryViewCell.xib in Resources */,
 				1288D8EC25C4828E00D72806 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,6 +258,7 @@
 				1288D8E525C4828E00D72806 /* AppDelegate.swift in Sources */,
 				1270ED1325D16D410088B2DF /* Item.swift in Sources */,
 				1270ED0325CC567D0088B2DF /* CategoryViewController.swift in Sources */,
+				129F769125DD7AEC00E78520 /* CategoryViewCell.swift in Sources */,
 				1288D8E725C4828E00D72806 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
