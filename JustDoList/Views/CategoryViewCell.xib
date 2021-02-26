@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="25" id="STq-yR-JwO"/>
                                     <constraint firstAttribute="width" constant="25" id="Vwa-FC-bnV"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="circle" catalog="system"/>
+                                <state key="normal" image="circle" catalog="system"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pf-kA-cRG">
                                 <rect key="frame" x="30" y="75" width="749" height="128"/>
@@ -48,8 +48,8 @@
                                     <constraint firstAttribute="trailing" secondItem="evb-1j-8es" secondAttribute="trailing" id="ZbA-Sr-Xbg"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arr" translatesAutoresizingMaskIntoConstraints="NO" id="KGf-pq-4IK" userLabel="rightImageView">
-                                <rect key="frame" x="784" y="124" width="60" height="30"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KGf-pq-4IK" userLabel="rightImageView">
+                                <rect key="frame" x="784" y="125" width="60" height="27.5"/>
                                 <color key="tintColor" red="0.066666666669999999" green="0.41176470590000003" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" identifier="rightIVHW" id="Zv6-Kn-Asx"/>
@@ -79,8 +79,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arr" width="128" height="128"/>
         <image name="circle" catalog="system" width="128" height="121"/>
+        <image name="rectangle.fill" catalog="system" width="128" height="93"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

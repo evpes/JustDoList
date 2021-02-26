@@ -8,10 +8,11 @@
 import UIKit
 import RealmSwift
 import ChameleonFramework
+import SwipeCellKit
 
-class ToDoListViewController: SwipeTableViewController {
+class ToDoListViewController: UIViewController, UITableViewDelegate ,UITableViewDataSource, SwipeTableViewCellDelegate {
         
-    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButtonOutlet: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
     let realm = try! Realm()
@@ -24,9 +25,13 @@ class ToDoListViewController: SwipeTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view
+        self.tableView.rowHeight = 60
         loadItems()
         tableView.separatorStyle = .none
+        tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellID)
         
 
         
@@ -58,16 +63,17 @@ class ToDoListViewController: SwipeTableViewController {
     
     //MARK: - TableView DatasourceMethods                   
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems?.count ?? 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! CategoryViewCell
+        cell.delegate = self
 
         if let item = todoItems?[indexPath.row] {
-            cell.textLabel?.text = item.taskName
+            cell.txtLabel.text = item.taskName
             cell.accessoryType = item.check ? .checkmark : .none
         } else {
             cell.textLabel?.text = "No added items yet"
@@ -76,8 +82,11 @@ class ToDoListViewController: SwipeTableViewController {
         if let color = selectedCategory?.color {
             let backgroundColor = UIColor(hexString: color)?.darken(byPercentage:  CGFloat(indexPath.row) / CGFloat((todoItems?.count ?? 1) * 2))
             cell.backgroundColor = backgroundColor
-            cell.textLabel?.textColor = ContrastColorOf(backgroundColor!, returnFlat: true)
+            cell.txtLabel.textColor = ContrastColorOf(backgroundColor!, returnFlat: true)
         }
+        
+        cell.checkButtonOutlet.isHidden = true
+        cell.rightImageView.isHidden = true
                 
         
         return cell
@@ -86,7 +95,7 @@ class ToDoListViewController: SwipeTableViewController {
     
     //MARK: - TableView Delegate methods
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let item = todoItems?[indexPath.row] {
             do {
@@ -106,37 +115,69 @@ class ToDoListViewController: SwipeTableViewController {
     
     //MARK: -  add new items
     
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction func addButtonPressed(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add new ToDo task", message: "Enter item name", preferredStyle: .alert)
-        
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Task name"
-        }
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            if let textField = alert.textFields![0].text {
-            if textField.count > 0 {
-                    if let currentCategory = self.selectedCategory {
-                        do {
-                            try self.realm.write {
-                                let newItem = Item()
-                                newItem.taskName = textField
-                                newItem.check = false
-                                currentCategory.items.append(newItem)
-                            }
-                        } catch {
-                            print("Error saving categories \(error)")
-                        }
-                    }
-                    self.tableView.reloadData()
-                }
+            
+            let alert = UIAlertController(title: "Add new ToDo task", message: "Enter item name", preferredStyle: .alert)
+            
+            alert.addTextField { (alertTextField) in
+                alertTextField.placeholder = "Task name"
             }
             
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                if let textField = alert.textFields![0].text {
+                if textField.count > 0 {
+                        if let currentCategory = self.selectedCategory {
+                            do {
+                                try self.realm.write {
+                                    let newItem = Item()
+                                    newItem.taskName = textField
+                                    newItem.check = false
+                                    currentCategory.items.append(newItem)
+                                }
+                            } catch {
+                                print("Error saving categories \(error)")
+                            }
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
     }
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//        
+//        let alert = UIAlertController(title: "Add new ToDo task", message: "Enter item name", preferredStyle: .alert)
+//        
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Task name"
+//        }
+//        
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+//            if let textField = alert.textFields![0].text {
+//            if textField.count > 0 {
+//                    if let currentCategory = self.selectedCategory {
+//                        do {
+//                            try self.realm.write {
+//                                let newItem = Item()
+//                                newItem.taskName = textField
+//                                newItem.check = false
+//                                currentCategory.items.append(newItem)
+//                            }
+//                        } catch {
+//                            print("Error saving categories \(error)")
+//                        }
+//                    }
+//                    self.tableView.reloadData()
+//                }
+//            }
+//            
+//        }))
+//        
+//        self.present(alert, animated: true, completion: nil)
+//    }
     
     //MARK: - Model manipulation methods
     
@@ -145,11 +186,11 @@ class ToDoListViewController: SwipeTableViewController {
         
         todoItems = selectedCategory?.items.sorted(byKeyPath: "dateCreated", ascending: false)
 
-        tableView.reloadData()
+        //tableView.reloadData()
         
     }
     
-    override func updateModel(at indexPath: IndexPath) {
+    func updateModel(at indexPath: IndexPath) {
         if let item = self.todoItems?[indexPath.row] {
             do {
                 try self.realm.write {
@@ -159,6 +200,28 @@ class ToDoListViewController: SwipeTableViewController {
                 print("Error deleting item :\(error)")
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            print("Delete Cell")
+            
+            self.updateModel(at: indexPath)
+            
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
     }
     
 }

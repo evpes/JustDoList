@@ -8,16 +8,19 @@
 import UIKit
 import RealmSwift
 import ChameleonFramework
+import SwipeCellKit
 
-class CategoryViewController: SwipeTableViewController {
+class CategoryViewController: UIViewController, UITableViewDelegate ,UITableViewDataSource, SwipeTableViewCellDelegate {
         
-    
+    @IBOutlet weak var tableView: UITableView!
     var categoryArray: Results<Category>?
     
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         self.tableView.rowHeight = 60
         loadCategories()
         //tableView.separatorStyle = .singleLine
@@ -37,13 +40,14 @@ class CategoryViewController: SwipeTableViewController {
     
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categoryArray?.count ?? 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! CategoryViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! CategoryViewCell
+        cell.delegate = self
         cell.txtLabel.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
         cell.rightImageView.tintColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
         cell.checkButtonOutlet.isHidden = true
@@ -56,8 +60,8 @@ class CategoryViewController: SwipeTableViewController {
     
     // MARK: - Add new Categories
     
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        
+    
+    @IBAction func addButtonPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add new category", message: "Enter category name", preferredStyle: .alert)
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "List name"
@@ -73,8 +77,27 @@ class CategoryViewController: SwipeTableViewController {
             }
         }))
         self.present(alert, animated: true, completion: nil)
-        
     }
+    
+//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+//        
+//        let alert = UIAlertController(title: "Add new category", message: "Enter category name", preferredStyle: .alert)
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "List name"
+//        }
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
+//            if let textField = alert.textFields![0].text {
+//                if textField.count > 0 {
+//                    let newCategory = Category()
+//                    newCategory.name = textField
+//                    newCategory.color = UIColor.randomFlat().hexValue()
+//                    self.save(category: newCategory)
+//                }
+//            }
+//        }))
+//        self.present(alert, animated: true, completion: nil)
+//        
+//    }
     
     
     // MARK: - Data manipulation methods
@@ -100,7 +123,7 @@ class CategoryViewController: SwipeTableViewController {
     
     //MARK: - Delete data from swipe
     
-    override func updateModel(at indexPath: IndexPath) {
+    func updateModel(at indexPath: IndexPath) {
         
         if let category = self.categoryArray?[indexPath.row] {
             do {
@@ -117,7 +140,7 @@ class CategoryViewController: SwipeTableViewController {
     
     // MARK: - TableView Delegate Methods
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
         performSegue(withIdentifier: "goToItems", sender: self)
@@ -132,6 +155,28 @@ class CategoryViewController: SwipeTableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            print("Delete Cell")
+            
+            self.updateModel(at: indexPath)
+            
+        }
+
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        return options
     }
     
 }
