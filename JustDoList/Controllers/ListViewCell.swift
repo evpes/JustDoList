@@ -8,7 +8,7 @@
 import UIKit
 import SwipeCellKit
 
-class CategoryViewCell: SwipeTableViewCell {
+class ListViewCell: SwipeTableViewCell {
 
     
     @IBOutlet weak var checkButtonOutlet: UIButton!

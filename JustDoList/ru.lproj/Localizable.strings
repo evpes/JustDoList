@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  JustDoList
+
+  Created by evpes on 15.04.2021.
+  
+*/
+
+"Edit task" = "Редактировать задачу";
+"Edit category" = "Редактировать список";
+"Edit" = "Редактировать";
+"Delete" = "Удалить";
+
+"Notifications disabled" = "Нотификации выключены";
+"To turn on notifications, you need enable notifications in Settings -> List -> Notifications" = "Для того чтобы включить напоминания вам нужно включить уведомления в настройках по пути: Настройки -> list -> Уведомления";
+"Open Settings" = "Открыть настройки";
+"Notification" = "Напоминание";

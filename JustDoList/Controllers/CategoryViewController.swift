@@ -9,11 +9,12 @@ import UIKit
 import RealmSwift
 import ChameleonFramework
 import SwipeCellKit
+import SwiftEntryKit
 
 class CategoryViewController: UIViewController, UITableViewDelegate ,UITableViewDataSource, SwipeTableViewCellDelegate {
         
     @IBOutlet weak var tableView: UITableView!
-    var categoryArray: Results<Category>?
+    var categoryArray: Results<ToDoList>?
     
     let realm = try! Realm()
     
@@ -23,7 +24,6 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
         tableView.dataSource = self
         self.tableView.rowHeight = 60
         loadCategories()
-        //tableView.separatorStyle = .singleLine
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellID)
 
     }
@@ -46,14 +46,13 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! CategoryViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellID, for: indexPath) as! ListViewCell
         cell.delegate = self
         cell.txtLabel.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
+        cell.txtLabel.textColor = .label
         cell.rightImageView.tintColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
         cell.checkButtonOutlet.isHidden = true
-//        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No categories added yet"
-//        
-//        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].color ?? "1D9BF6")
+
         
         return cell
     }
@@ -62,46 +61,25 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
     
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Add new category", message: "Enter category name", preferredStyle: .alert)
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "List name"
-        }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
-            if let textField = alert.textFields![0].text {
-                if textField.count > 0 {
-                    let newCategory = Category()
-                    newCategory.name = textField
-                    newCategory.color = UIColor.randomFlat().hexValue()
-                    self.save(category: newCategory)
-                }
-            }
-        }))
-        self.present(alert, animated: true, completion: nil)
+
+        var attributes = EKAttributes()
+        attributes.position = .center
+        attributes = .centerFloat
+        attributes.displayDuration = .infinity
+        attributes.entryInteraction = .absorbTouches
+        attributes.hapticFeedbackType = .success
+        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
+        let offset = EKAttributes.PositionConstraints.KeyboardRelation.Offset(bottom: 10, screenEdgeResistance: 20)
+        let keyboardRelation = EKAttributes.PositionConstraints.KeyboardRelation.bind(offset: offset)
+        attributes.positionConstraints.keyboardRelation = keyboardRelation
+        let newCatView = NewListView()
+        newCatView.categoryVC = self
+        SwiftEntryKit.display(entry: newCatView, using: attributes, presentInsideKeyWindow: true)
     }
-    
-//    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-//        
-//        let alert = UIAlertController(title: "Add new category", message: "Enter category name", preferredStyle: .alert)
-//        alert.addTextField { (alertTextField) in
-//            alertTextField.placeholder = "List name"
-//        }
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alertAction) in
-//            if let textField = alert.textFields![0].text {
-//                if textField.count > 0 {
-//                    let newCategory = Category()
-//                    newCategory.name = textField
-//                    newCategory.color = UIColor.randomFlat().hexValue()
-//                    self.save(category: newCategory)
-//                }
-//            }
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//        
-//    }
     
     
     // MARK: - Data manipulation methods
-    func save(category: Category) {
+    func save(category: ToDoList) {
         
         do {
             try realm.write {
@@ -116,7 +94,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
     
     func loadCategories() {
         
-        categoryArray = realm.objects(Category.self)
+        categoryArray = realm.objects(ToDoList.self)
         tableView.reloadData()
         
     }
@@ -142,8 +120,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        performSegue(withIdentifier: "goToItems", sender: self)
+        performSegue(withIdentifier: K.segues.segueToTasksView, sender: self)
         
     }
     
@@ -160,7 +137,7 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
 
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+        let deleteAction = SwipeAction(style: .destructive, title: NSLocalizedString("Delete", comment: "") ) { action, indexPath in
             print("Delete Cell")
             
             self.updateModel(at: indexPath)
@@ -168,9 +145,34 @@ class CategoryViewController: UIViewController, UITableViewDelegate ,UITableView
         }
 
         // customize the action appearance
-        deleteAction.image = UIImage(named: "delete")
+        deleteAction.image = UIImage(systemName: "trash")
+        
+        let editAction = SwipeAction(style: .default, title: NSLocalizedString("Edit", comment: "")) { (action, indexPath) in
+            self.editCat(index: indexPath.row)
+        }
+        
+        editAction.image = UIImage(systemName: "pencil")
 
-        return [deleteAction]
+        return [deleteAction,editAction]
+
+        
+    }
+    
+    func editCat(index: Int) {
+        var attributes = EKAttributes()
+        attributes.position = .center
+        attributes = .centerFloat
+        attributes.displayDuration = .infinity
+        attributes.entryInteraction = .absorbTouches
+        attributes.hapticFeedbackType = .success
+        attributes.shadow = .active(with: .init(color: .black, opacity: 0.3, radius: 10, offset: .zero))
+        let offset = EKAttributes.PositionConstraints.KeyboardRelation.Offset(bottom: 10, screenEdgeResistance: 20)
+        let keyboardRelation = EKAttributes.PositionConstraints.KeyboardRelation.bind(offset: offset)
+        attributes.positionConstraints.keyboardRelation = keyboardRelation
+        let newCatView = NewListView()
+        newCatView.categoryVC = self
+        newCatView.setIndex(index: index)
+        SwiftEntryKit.display(entry: newCatView, using: attributes, presentInsideKeyWindow: true)
     }
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {

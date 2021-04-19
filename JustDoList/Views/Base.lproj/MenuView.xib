@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuView" customModule="JustDoList" customModuleProvider="target">
+            <connections>
+                <outlet property="colorScheme" destination="ztt-e8-lrt" id="ZZy-iK-d29"/>
+                <outlet property="menuView" destination="iN0-l3-epB" id="TFC-9s-gjK"/>
+                <outlet property="okButtonOutlet" destination="XFa-4w-bti" id="QrK-du-Bi6"/>
+                <outlet property="sortTasksBy" destination="y1O-e4-ABg" id="CvC-n7-jry"/>
+                <outlet property="taskVisibility" destination="S4x-qf-XK5" id="bJg-K6-sHZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="menuView">
+            <rect key="frame" x="0.0" y="0.0" width="561" height="382"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="WyX-S8-PHK">
+                    <rect key="frame" x="15" y="59" width="531" height="274"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="4ZB-Bc-eN0">
+                            <rect key="frame" x="0.0" y="0.0" width="531" height="21.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pyz-XM-D0g">
+                                    <rect key="frame" x="0.0" y="0.0" width="531" height="21.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="WdS-i9-zmD">
+                            <rect key="frame" x="0.0" y="56" width="531" height="31"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show/hide completed tasks" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JET-xc-elf">
+                                    <rect key="frame" x="0.0" y="5.5" width="262.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="S4x-qf-XK5">
+                                    <rect key="frame" x="268.5" y="0.0" width="262.5" height="32"/>
+                                    <segments>
+                                        <segment title="" image="eye" catalog="system"/>
+                                        <segment title="" image="eye.slash" catalog="system"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="changeTaskVisibility:" destination="-1" eventType="valueChanged" id="75x-JT-PLo"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cd4-Ka-YUB">
+                            <rect key="frame" x="0.0" y="117" width="531" height="31"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color scheme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hp-VX-VSv">
+                                    <rect key="frame" x="0.0" y="5" width="261.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ztt-e8-lrt">
+                                    <rect key="frame" x="269.5" y="0.0" width="261.5" height="32"/>
+                                    <segments>
+                                        <segment title="color"/>
+                                        <segment title="simple"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="changeColorScheme:" destination="-1" eventType="valueChanged" id="dwY-No-DJW"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YGd-zW-Ffv">
+                            <rect key="frame" x="0.0" y="177.5" width="531" height="31"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort tasks by " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zix-a3-0Rf">
+                                    <rect key="frame" x="0.0" y="5.5" width="261.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="y1O-e4-ABg">
+                                    <rect key="frame" x="269.5" y="0.0" width="261.5" height="32"/>
+                                    <segments>
+                                        <segment title="Created"/>
+                                        <segment title="A...Z"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="changeSortBy:" destination="-1" eventType="valueChanged" id="xsC-Vb-3RE"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htu-VG-9V8">
+                            <rect key="frame" x="0.0" y="234" width="531" height="40"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="U2C-dK-Pzm">
+                                    <rect key="frame" x="240.5" y="1" width="50" height="37.5"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="50" id="xU1-c9-9vS"/>
+                                    </constraints>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFa-4w-bti">
+                                    <rect key="frame" x="235.5" y="-10" width="60" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="60" id="e6c-1b-kSB"/>
+                                        <constraint firstAttribute="height" constant="60" id="oFr-gt-2XW"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <connections>
+                                        <action selector="button:" destination="-1" eventType="touchUpInside" id="Jsr-Rt-0MJ"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="U2C-dK-Pzm" secondAttribute="bottom" id="D8s-S9-YG8"/>
+                                <constraint firstItem="XFa-4w-bti" firstAttribute="centerY" secondItem="htu-VG-9V8" secondAttribute="centerY" id="E9B-1K-H2l"/>
+                                <constraint firstItem="XFa-4w-bti" firstAttribute="centerX" secondItem="htu-VG-9V8" secondAttribute="centerX" id="QrF-Wn-xcG"/>
+                                <constraint firstItem="U2C-dK-Pzm" firstAttribute="top" secondItem="htu-VG-9V8" secondAttribute="top" id="TM6-7j-3aF"/>
+                                <constraint firstItem="U2C-dK-Pzm" firstAttribute="centerX" secondItem="htu-VG-9V8" secondAttribute="centerX" id="Umm-IG-KaG"/>
+                                <constraint firstAttribute="height" constant="40" id="Zfh-h7-cfb"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="KaR-vm-h1k"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="WyX-S8-PHK" firstAttribute="top" secondItem="KaR-vm-h1k" secondAttribute="top" constant="15" id="3nw-Ub-5yi"/>
+                <constraint firstItem="KaR-vm-h1k" firstAttribute="bottom" secondItem="WyX-S8-PHK" secondAttribute="bottom" constant="15" id="Q3t-yR-DFX"/>
+                <constraint firstItem="KaR-vm-h1k" firstAttribute="trailing" secondItem="WyX-S8-PHK" secondAttribute="trailing" constant="15" id="V8u-lN-Hp0"/>
+                <constraint firstItem="WyX-S8-PHK" firstAttribute="leading" secondItem="KaR-vm-h1k" secondAttribute="leading" constant="15" id="uvx-gK-9je"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="173.18840579710147" y="-41.517857142857139"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="checkmark.rectangle.fill" catalog="system" width="128" height="93"/>
+        <image name="eye" catalog="system" width="128" height="81"/>
+        <image name="eye.slash" catalog="system" width="128" height="86"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

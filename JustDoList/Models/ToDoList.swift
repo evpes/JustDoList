@@ -1,5 +1,5 @@
 //
-//  List.swift
+//  ToDoList.swift
 //  JustDoList
 //
 //  Created by evpes on 08.02.2021.
@@ -8,8 +8,8 @@
 import Foundation
 import RealmSwift
 
-class Category: Object {
+class ToDoList: Object {
     @objc dynamic var name: String = ""
-    let items = List<Item>()
+    let tasks = List<Task>()
     @objc dynamic var color = ""
 }

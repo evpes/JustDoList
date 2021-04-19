@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Just ToDO-->
+        <!--list-->
         <scene sceneID="Tq8-md-TpO">
             <objects>
                 <viewController id="0cr-LK-vBY" customClass="CategoryViewController" customModule="JustDoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,14 +36,14 @@
                                 <rect key="frame" x="332" y="760" width="67" height="66"/>
                                 <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="6im-g1-D6I"/>
-                                    <constraint firstAttribute="height" constant="60" id="hga-cl-epe"/>
+                                    <constraint firstAttribute="width" constant="80" id="6im-g1-D6I"/>
+                                    <constraint firstAttribute="height" constant="80" id="hga-cl-epe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="tintColor" red="0.68860479797979801" green="0.0064465497842693432" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
                                 <state key="normal">
-                                    <imageReference key="image" image="plus.circle" catalog="system" symbolScale="large"/>
+                                    <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <connections>
@@ -63,11 +63,11 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Just ToDO" id="Vek-Pa-nI7"/>
+                    <navigationItem key="navigationItem" title="list" id="Vek-Pa-nI7"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="ATl-yc-J78" id="a2V-4L-q2r"/>
-                        <segue destination="5Q1-qO-73V" kind="show" identifier="goToItems" id="UaM-D1-WCk"/>
+                        <segue destination="5Q1-qO-73V" kind="show" identifier="toTasks" id="UaM-D1-WCk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPe-WT-y8r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -104,11 +104,11 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YGF-aI-1cY">
                                 <rect key="frame" x="334" y="753" width="60" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="gMi-Jy-WpP"/>
-                                    <constraint firstAttribute="width" constant="60" id="qeq-ge-8nm"/>
+                                    <constraint firstAttribute="height" constant="80" id="gMi-Jy-WpP"/>
+                                    <constraint firstAttribute="width" constant="80" id="qeq-ge-8nm"/>
                                 </constraints>
                                 <color key="tintColor" red="0.68860479799999996" green="0.0064465497839999997" blue="0.0" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="plus.circle" catalog="system"/>
+                                <state key="normal" image="plus.circle.fill" catalog="system"/>
                                 <connections>
                                     <action selector="addButtonPressed:" destination="5Q1-qO-73V" eventType="touchUpInside" id="vEJ-Cb-0SC"/>
                                 </connections>
@@ -125,7 +125,21 @@
                             <constraint firstItem="PjJ-U2-c2x" firstAttribute="trailing" secondItem="fOo-nD-bE7" secondAttribute="trailing" id="nWP-WH-Cgr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="rds-eY-ptp"/>
+                    <navigationItem key="navigationItem" title="Title" id="rds-eY-ptp">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="96M-4q-miu">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jnD-sZ-Iqu">
+                                <rect key="frame" x="266" y="0.0" width="128" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="gear" catalog="system"/>
+                                <connections>
+                                    <action selector="settingsButtonPressed:" destination="5Q1-qO-73V" eventType="touchUpInside" id="DQJ-3b-ttl"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="settingsButtonPressed:" destination="5Q1-qO-73V" id="yFw-x6-vRG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="yRi-YB-v3b" id="YxT-7H-xki"/>
                         <outlet property="tableView" destination="fOo-nD-bE7" id="p3f-1L-rPL"/>
@@ -163,7 +177,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus.circle" catalog="system" width="128" height="121"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
